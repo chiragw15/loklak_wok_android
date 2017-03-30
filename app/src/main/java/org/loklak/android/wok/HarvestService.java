@@ -50,6 +50,7 @@ public class HarvestService extends IntentService {
             SystemClock.sleep(MainActivity.sketch.canDraw() ? 1000 : 10000);
         }
     }
+    
 
     @Override
     public void onDestroy() {
