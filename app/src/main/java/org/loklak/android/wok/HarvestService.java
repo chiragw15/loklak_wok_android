@@ -51,6 +51,7 @@ public class HarvestService extends IntentService {
         }
     }
 
+
     @Override
     public void onDestroy() {
         Log.d(TAG, "destroyed");

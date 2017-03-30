@@ -1,12 +1,12 @@
 language: android
 jdk: oraclejdk8
-sudo: true
+sudo: required
 env:
   global:
   - GRADLE_OPTS="-Xmx512m"
   matrix:
  # - ADB_INSTALL_TIMEOUT=15 ANDROID_BUILD_TOOLS_VERSION=24.0.2 ANDROID_TARGET=android-23 ANDROID_ABI=armeabi-v7a
-  - ADB_INSTALL_TIMEOUT=15 ANDROID_BUILD_TOOLS_VERSION=24.0.2 ANDROID_API_LEVEL=24 ANDROID_ABI=armeabi-v7a ANDROID_TAG=google_apis
+  - ADB_INSTALL_TIMEOUT=15 ANDROID_BUILD_TOOLS_VERSION=23.0.2 ANDROID_API_LEVEL=23 ANDROID_ABI=armeabi-v7a ANDROID_TAG=google_apis
 cache:
   directories:
   - "${TRAVIS_BUILD_DIR}/android/gradle/caches/"
@@ -24,12 +24,12 @@ android:
   - extra-android-m2repository
   - sys-img-armeabi-v7a-$ANDROID_TARGET
 before_script:
-  - cd android
+  - chmod +x gradlew
 script:
   - ./gradlew build
   - ./gradlew assembleRelease
   # Success or not if a pull request is merged the apk should be updated if it can be build
-  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./update-apk.sh; fi'
+  - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then bash ./update-apk.sh; fi'
 notifications:
   webhooks:
 after_success:
